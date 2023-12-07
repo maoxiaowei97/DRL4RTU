@@ -108,8 +108,7 @@ def dict_merge(dict_list=[]):
 
 def get_dataset_path(params={}):
     dataset = params['dataset']
-    # file = ws + f'/data/dataset/{dataset}'
-    file = '/data/maodawei/DRL4RTP-0725/' + f'/data/dataset/{dataset}'
+    file = ws + f'/data/dataset/{dataset}'
     train_path = file + f'/train.npy'
     val_path = file + f'/val.npy'
     test_path = file + f'/test.npy'
@@ -257,7 +256,7 @@ def run(params, DATASET, process_batch, test_model):
         print('best model loaded !!!')
     except:
         print('load best model failed')
-    test_result = test_model(PolicyNetwork, test_loader, device, params['pad_value'], params, save2file, 'test')
+    test_result = test_model(PolicyNetwork, test_loader, device, params['pad_value'], params, save2file_, 'test')
     np.save(save_model_dict + f'/reward_{local_time}.npy',np.array(total_reward))
     print('\n-------------------------------------------------------------')
     print('Best epoch: ', early_stop.best_epoch)
