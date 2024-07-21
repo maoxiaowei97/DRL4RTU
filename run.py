@@ -24,6 +24,9 @@ if __name__ == "__main__":
 
     params['target'] = 'krc'
     params['gated_fusion'] = True
+    params['R'] = 5
+    params['beta'] = 5
+    params['lambda'] = 1
 
     args_lst = []
     for model in ['DRL4RTU']:
@@ -35,7 +38,7 @@ if __name__ == "__main__":
                                         for rl_r in [0.5, 1]:
                                             for cred in [20]:
                                                 for fusion in [True]:
-                                                    for reward_type in ['acc3+picp', 'lsd+picp', 'joint_reward']:
+                                                    for reward_type in ['hr1+lsd+picp']:
                                                         for target in ['krc', 'mis']:
                                                             params_dict = {'model': model, 'hidden_size': hs, 'rl_ratio':rl_r,  'reward_type': reward_type,
                                                                                'trace_decay': trace_decay, 'cred':cred, 'gated_fusion': fusion,  'if_fusion': fusion,
@@ -47,11 +50,3 @@ if __name__ == "__main__":
     for p in args_lst:
         run(p)
         print('finished!!!')
-
-
-
-
-
-
-
-
