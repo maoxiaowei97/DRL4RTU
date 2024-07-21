@@ -181,9 +181,9 @@ def calc_route_time_reward(route_prediction, route_label, label_len, rt_log_prob
             continue
         else:
             uq_step_reward = uq_reward_calc(eta_pred, sigma_pred, eta_lab, lab, lab_len[0], params)  # 越大越好
-            if params['reward_type'] == 'lsd+picp':
-                route_step_reward = 100 - location_deviation(pre, lab, lab_len[0], 'square')
-                sequence_reward = route_step_reward * uq_step_reward + route_step_reward + uq_step_reward
+            if params['reward_type'] == 'hr1+lsd+picp':
+                route_step_reward = params['R'] - location_deviation(pre, lab, lab_len[0], 'square')  + params['beta'] * hit_rate(pre, lab, lab[:lab_len[0]], top_n=1)
+                sequence_reward = route_step_reward * (uq_step_reward + params['lambda'])
                 rt_reward.append(sequence_reward)
                 seq_lab_len = lab_len[0] * 3
                 seq_log_prob = rt_log_prob[torch.arange(0, params['max_task_num'] * 3, 3)]
@@ -193,7 +193,7 @@ def calc_route_time_reward(route_prediction, route_label, label_len, rt_log_prob
                 rt_reward.append(sequence_reward)
                 seq_lab_len = lab_len[0] * 3
                 seq_log_prob = rt_log_prob
-            elif params['reward_type'] == 'joint_reward':
+            elif params['reward_type'] == 'lsd + picp':
                 acc_reward = route_acc(pre, lab[:lab_len[0]], 3) * 50
                 lsd_reward = 100 - location_deviation(pre, lab, lab_len[0], 'square')
                 if acc_reward + lsd_reward > 0:
@@ -211,7 +211,7 @@ def calc_route_time_reward(route_prediction, route_label, label_len, rt_log_prob
 
 
 def get_log_prob_mask(pred_len, params):
-    if params['reward_type'] == 'lsd+picp':
+    if params['reward_type'] == 'hr1+lsd+picp':
         log_prob_mask = torch.zeros([pred_len.shape[0], params['max_task_num'] * 3]).to(pred_len.device)
     elif params['reward_type'] == 'acc3+picp':
         log_prob_mask = torch.zeros([pred_len.shape[0], params['max_task_num'] * 3]).to(pred_len.device)
