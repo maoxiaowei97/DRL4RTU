@@ -16,14 +16,13 @@ def get_params():
 if __name__ == "__main__":
     from utils.utils import dict_merge
     params = vars(get_params())
-    params['batch_size'] = 256
+    params['batch_size'] = 16
     params['is_test'] = False
     params['inference'] = False
     params['early_stop'] = 10
-    params['max_task_num'] = 30
+    params['max_task_num'] = 25
 
     params['target'] = 'krc'
-    params['gated_fusion'] = True
     params['R'] = 5
     params['beta'] = 5
     params['lambda'] = 1
@@ -34,7 +33,7 @@ if __name__ == "__main__":
                 for confidence in [1]:
                     for topk in [1]:
                             for trace_decay in [0.99]:
-                                for dataset in ['pickup_yt']:
+                                for dataset in ['pickup_cq_0315']:
                                         for rl_r in [0.5, 1]:
                                             for cred in [20]:
                                                 for fusion in [True]:
