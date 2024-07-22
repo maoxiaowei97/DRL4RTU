@@ -33,7 +33,7 @@ if __name__ == "__main__":
                 for confidence in [1]:
                     for topk in [1]:
                             for trace_decay in [0.99]:
-                                for dataset in ['pickup_cq_0315']:
+                                for dataset in ['pickup_cq']:
                                         for rl_r in [0.5, 1]:
                                             for cred in [20]:
                                                 for fusion in [True]:
