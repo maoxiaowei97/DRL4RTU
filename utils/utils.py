@@ -2,7 +2,7 @@
 import numpy as np
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from tqdm import tqdm
 
 import time
@@ -261,9 +261,3 @@ def run(params, DATASET, process_batch, test_model):
     print('\n-------------------------------------------------------------')
     print('Best epoch: ', early_stop.best_epoch)
     print(f'{params["model"]} Evaluation in test:', test_result.route_eta_to_str())
-
-
-if __name__ == '__main__':
-    pass
-
-
