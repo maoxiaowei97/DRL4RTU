@@ -8,7 +8,7 @@ class DRL4RTU_dataset(Dataset):
             params: dict, #parameters dict
     )->None:
         super().__init__()
-        if mode not in ["train", "val", "test"]:  # "validate"
+        if mode not in ["train", "val", "test"]:
             raise ValueError
         path_key = {'train':'train_path', 'val':'val_path','test':'test_path'}[mode]
         path = params[path_key]
@@ -25,14 +25,8 @@ class DRL4RTU_dataset(Dataset):
         label_len = self.data['label_len'][index]
         V_at = self.data['time_label'][index]
         start_fea = self.data['start_fea'][index]
-        V_non_neighbor = self.data['V_non_neighbor'][index]
         start_idx = self.data['start_idx'][index]
-        cou_fea = self.data['cou_fea'][index]
-        # eta_label_len = self.data['eta_label_len'][index]
         route_label_all = self.data['route_label_all'][index]
         eta_label_len = self.data['eta_label_len'][index]
         first_node = self.data['first_node'][index]
-        return V, V_reach_mask, label, label_len, V_at, start_fea, V_non_neighbor, start_idx, cou_fea, eta_label_len, first_node, route_label_all, pred_len
-
-if __name__ == '__main__':
-    pass
+        return V, V_reach_mask, label, label_len, V_at, start_fea, start_idx, eta_label_len, route_label_all, pred_len, first_node
